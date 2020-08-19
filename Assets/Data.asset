@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b31b695a44d2f54f82e020aebd7a5de, type: 3}
+  m_Name: Data
+  m_EditorClassIdentifier: 
+  Colors:
+  - {r: 1, g: 1, b: 1, a: 0.39215687}
+  - {r: 1, g: 0.74686915, b: 0, a: 0.78431374}
+  - {r: 1, g: 0, b: 0.20994282, a: 0.78431374}
+  - {r: 0, g: 0.41432905, b: 1, a: 0.78431374}
+  - {r: 0, g: 0.6653924, b: 1, a: 1}
+  - {r: 1, g: 0, b: 0.34520102, a: 1}
+  Heroes:
+  - {fileID: 11400000, guid: ea454e0f419f9944ea2ec95ac4512bb5, type: 2}
+  - {fileID: 11400000, guid: e07fb2934ec963a42a8eb9ac32f7ea21, type: 2}
+  Cards:
+  - {fileID: 11400000, guid: ac235fb524994b144acc3591b84c7338, type: 2}
+  - {fileID: 11400000, guid: 47e3ccd510cba9d4ba9521d906e89f65, type: 2}
