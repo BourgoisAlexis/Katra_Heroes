@@ -14,6 +14,7 @@ public class ActiveButton : MonoBehaviour
     public void Setup(HeroPiece _piece)
     {
         piece = _piece;
+        transform.localScale = Vector3.zero;
     }
 
     public void Used(bool _used)

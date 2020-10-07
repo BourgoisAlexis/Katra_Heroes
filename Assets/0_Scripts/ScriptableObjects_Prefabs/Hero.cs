@@ -24,10 +24,13 @@ public class Hero : ScriptableObject
     public e_unitType UnitType;
 
     [Header("Abilities")]
+    public AbilityPosition Move;
     public AbilityStats Attack;
     public Ability Active;
     public Ability Passive;
     #endregion
+
+
 
 
     private void Awake()

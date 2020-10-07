@@ -1,28 +1,37 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
 
 public class GameplayManager : MonoBehaviour
 {
     public static GameplayManager Instance;
 
     #region Variables
-    [SerializeField]
-    private Data data;
-    [SerializeField]
-    private Camera mainCamera;
+    public event Action OnYourTurn;
+    public event Action OnEnnemyTurn;
+
+    [SerializeField] private Data data;
+    [SerializeField] private Camera mainCamera;
 
     private e_teams team = e_teams.Blue;
-    private DeckManager deck;
-    private BoardManager board;
-    private UIManager ui;
-    private int phase;
+    private DeckManager deckManager;
+    private BoardManager boardManager;
+    private UIManager uiManager;
+
+    [SerializeField]
+    private e_step step;
+    [SerializeField]
+    private int mana;
+    [SerializeField]
+    private bool turn;
 
     //Accessors
     public e_teams Team => team;
-
     public Data Data => data;
-    public DeckManager Deck => deck;
-    public BoardManager Board => board;
-    public UIManager UI => ui;
+    public DeckManager DeckManager => deckManager;
+    public BoardManager BoardManager => boardManager;
+    public UIManager UIManager => uiManager;
+    public int Mana => mana;
     #endregion
 
 
@@ -33,9 +42,9 @@ public class GameplayManager : MonoBehaviour
         else
             DestroyImmediate(this);
 
-        deck = GetComponent<DeckManager>();
-        board = GetComponent<BoardManager>();
-        ui = GetComponent<UIManager>();
+        deckManager = GetComponent<DeckManager>();
+        boardManager = GetComponent<BoardManager>();
+        uiManager = GetComponent<UIManager>();
         mainCamera = Camera.main;
     }
 
@@ -55,7 +64,7 @@ public class GameplayManager : MonoBehaviour
     private void Down()
     {
         //UIs
-        GameObject _ui = ui.UIClick.DetectUI(Input.mousePosition);
+        GameObject _ui = uiManager.UIClick.DetectUI(Input.mousePosition);
         CardPiece _card = null;
         ActiveButton _active = null;
         if (_ui != null)
@@ -75,71 +84,145 @@ public class GameplayManager : MonoBehaviour
             _square = hit.transform.GetComponent<Square>();
         }
 
-
-        if (_card != null)
+        if (step == e_step.Card)
         {
-            deck.ClickDrag(_card.transform);
-            deck.ClickOnCard(_card);
-        }
-        else if (_active != null && _active.Piece.Team == team && _active.Piece.CanActive > 0)
-            board.ClickOnActive(_active);
+            if(_card != null)
+            {
+                deckManager.ClickDrag(_card.transform);
+                deckManager.ClickOnCard(_card);
+            }
 
-
-        else if (_piece != null)
-        {
-            if (deck.UsingCard)
-                deck.TargetHero(_piece);
             else
+                UnselectAll();
+        }
+
+        else if (step == e_step.UseCard)
+        {
+            if (_piece != null)
+                deckManager.TargetHero(_piece);
+            else if (_square != null)
+                deckManager.TargetBoard(_square);
+        }
+
+        else if (step == e_step.Board)
+        {
+            if (_active != null && _active.Piece.Team == team && _active.Piece.CanActive > 0)
+                boardManager.ClickOnActive(_active);
+            else if (_piece != null)
             {
                 if (_piece.Team == team)
-                    board.ClickDrag(_piece.transform);
+                    boardManager.ClickDrag(_piece.transform);
 
-                board.ClickOnHero(_piece);
-                deck.Unselection();
+                boardManager.ClickOnHero(_piece);
             }
-        }
-        else if (_square != null)
-        {
-            if (deck.UsingCard)
-                deck.TargetBoard(_square);
-            else
+            else if (_square != null)
             {
-                board.ClickOnBoard(_square);
-                deck.Unselection();
+                boardManager.ClickOnBoard(_square);
+            }
+
+            else
+                UnselectAll();
+        }
+
+        else if (step == e_step.Ennemy)
+        {
+            if (_piece != null)
+            {
+                //Afficher les stats quand ce sera fait
+            }
+            else if (_card != null)
+            {
+                //Afficher les stats quand ce sera fait
             }
         }
-        else
-            UnselectAll();
     }
 
     private void Maintain()
     {
-        if (deck.ToDrag != null)
-            deck.Drag();
-        else if (board.ToDrag != null)
-            board.Drag();
+        if (deckManager.ToDrag != null)
+            deckManager.Drag();
+        else if (boardManager.ToDrag != null)
+            boardManager.Drag();
     }
 
     private void Up()
     {
-        if (deck.Dragging)
-            deck.DragEnd();
-        else if (board.Dragging)
-            board.DragEnd();
-        else if (board.CanUnselect)
-            board.Unselection();
+        if (deckManager.Dragging)
+            deckManager.DragEnd();
+        else if (boardManager.Dragging)
+            boardManager.DragEnd();
+        else if (boardManager.CanUnselect)
+            boardManager.Unselection();
     }
 
 
     private void UnselectAll()
     {
-        board.Unselection();
-        deck.Unselection();
+        boardManager.Unselection();
+        deckManager.Unselection();
     }
 
 
-    public void ChangePhase()
+    public void ChangeStep(int _step)
     {
-        phase++;
+        step = (e_step)_step;
+    }
+
+    public void UpdateMana(int _value)
+    {
+        mana += _value;
+        uiManager.UpdateMana();
+
+        if (mana <= 0)
+            BoardStepDebute();
+    }
+
+
+    //Map(board datas) => Board(board utility) => Deck => DebuteDraw
+    public void DebuteDraw()
+    {
+        StartCoroutine(DebuteDrawCorout());
+    }
+
+    private IEnumerator DebuteDrawCorout()
+    {
+        ChangeStep(1);
+
+        int t = 5;
+        yield return new WaitForSeconds(1);
+
+        for (int i = 0; i < t; i++)
+        {
+            deckManager.DrawCard();
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        if (turn)
+            YourTurn();
+        else
+            EnnemyTurn();
+
+    }
+
+    public void YourTurn()
+    {
+        if (OnYourTurn != null)
+            OnYourTurn();
+
+        ChangeStep(2);
+        //ChangeStep(4);
+    }
+
+    public void EnnemyTurn()
+    {
+        if (OnEnnemyTurn != null)
+            OnEnnemyTurn();
+
+        ChangeStep(5);
+    }
+
+    public void BoardStepDebute()
+    {
+        ChangeStep(4);
     }
 }

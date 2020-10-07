@@ -24,6 +24,7 @@ MonoBehaviour:
   Fly: 0
   Species: 3
   UnitType: 1
+  Move: {fileID: 11400000, guid: a444e91a40f3a24468987469334a94d2, type: 2}
   Attack: {fileID: 11400000, guid: b2645971357b8d24291293cea99dc083, type: 2}
   Active: {fileID: 11400000, guid: b2645971357b8d24291293cea99dc083, type: 2}
   Passive: {fileID: 11400000, guid: b2645971357b8d24291293cea99dc083, type: 2}

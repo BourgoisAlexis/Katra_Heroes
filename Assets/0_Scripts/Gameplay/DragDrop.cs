@@ -3,8 +3,7 @@
 public class DragDrop : MonoBehaviour
 {
     #region Variables
-    [SerializeField]
-    protected bool uiDragDrop;
+    [SerializeField] protected bool uiDragDrop;
 
     protected Vector3 initialPos;
     protected Transform toDrag;

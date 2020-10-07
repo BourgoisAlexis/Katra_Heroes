@@ -3,8 +3,7 @@
 public class Square : MonoBehaviour
 {
     #region Variables
-    [SerializeField]
-    private e_squareType squareType;
+    [SerializeField] private e_squareType squareType;
 
     private Vector2Int position;
     private bool occupied;

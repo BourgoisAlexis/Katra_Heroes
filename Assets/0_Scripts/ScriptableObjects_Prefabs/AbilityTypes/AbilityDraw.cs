@@ -14,9 +14,9 @@ public class AbilityDraw : Ability
         abilityType = e_abilityType.Draw;
     }
 
-    public override void Use(Square _target)
+    public override void Use(Square _target, HeroPiece _user)
     {
         for (int i = 0; i < Value; i++)
-            GameplayManager.Instance.Deck.DrawCard();
+            GameplayManager.Instance.DeckManager.DrawCard();
     }
 }

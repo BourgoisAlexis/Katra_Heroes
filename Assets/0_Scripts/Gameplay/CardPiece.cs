@@ -5,10 +5,8 @@ using UnityEngine.UI;
 public class CardPiece : MonoBehaviour
 {
     #region Variables
-    [SerializeField]
-    private TextMeshProUGUI text;
-    [SerializeField]
-    private Image artWork;
+    [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private Image artWork;
     
     private Card card;
     private Transform _transform;

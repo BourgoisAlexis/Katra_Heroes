@@ -9,12 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8bb9bb86151dbf4cb78564dff55991d, type: 3}
-  m_Name: DrawI
+  m_Script: {fileID: 11500000, guid: e160309ebc0aa0b46ba121bbb4889def, type: 3}
+  m_Name: BasicAttack
   m_EditorClassIdentifier: 
   Graph: {fileID: 0}
   RangeType: 0
-  Range: 0
+  Range: 1
+  Exceptions: 
+  GetOccupied: 1
   EffectRangeType: 0
   EffectRange: 0
-  Value: 1
+  Stat: 1
+  Value: -30
+  Duration: 0

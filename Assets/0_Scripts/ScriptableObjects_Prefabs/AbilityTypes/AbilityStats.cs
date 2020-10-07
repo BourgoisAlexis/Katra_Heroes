@@ -19,7 +19,7 @@ public class AbilityStats : Ability
         abilityType = e_abilityType.Stats;
     }
 
-    public override void Use(Square _target)
+    public override void Use(Square _target, HeroPiece _user)
     {
         if (_target.Piece != null)
             _target.Piece.ModifyStat(Stat, Value, Duration);

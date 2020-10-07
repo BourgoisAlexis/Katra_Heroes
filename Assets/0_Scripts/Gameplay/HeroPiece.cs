@@ -4,8 +4,7 @@ using UnityEngine;
 public class HeroPiece : MonoBehaviour
 {
     #region Variables
-    [SerializeField]
-    private SpriteRenderer visual;
+    [SerializeField] private SpriteRenderer visual;
 
     private Transform _transform;
     private Hero hero;
@@ -40,7 +39,8 @@ public class HeroPiece : MonoBehaviour
         team = _team;
         position = _position;
         ui = _heroUI;
-        ui.Setup(this);
+        Color color = _team == e_teams.Blue ? GameplayManager.Instance.Data.Colors[4] : GameplayManager.Instance.Data.Colors[5];
+        ui.Setup(this, color);
         visual.sprite = hero.Graph;
 
         stats.Add(e_stats.Health, new Stat(hero.Health, false));
@@ -53,43 +53,40 @@ public class HeroPiece : MonoBehaviour
         hero.Active.Set();
         hero.Passive.Set();
 
-        if (team == e_teams.Blue)
-            ui.ChangeColor(GameplayManager.Instance.Data.Colors[4]);
-        else if (team == e_teams.Red)
-            ui.ChangeColor(GameplayManager.Instance.Data.Colors[5]);
-
         UpdateUI();
     }
 
 
-    public void MovePiece(Square _oldSquare, Square _square)
+    public void MovePiece(Square _square, bool _useMove)
     {
-        _oldSquare.ChangeOccupied(null);
+        GameplayManager.Instance.BoardManager.Board[position.x, position.y].ChangeOccupied(null);
         _transform.position = new Vector3 (_square.transform.position.x, _square.transform.position.y, -1);
         position = _square.Position;
         _square.ChangeOccupied(this);
 
-        canMove --;
+        if (_useMove)
+            canMove --;
+
         UpdateUI();
     }
 
 
     public void Attack(Square _target)
     {
-        hero.Attack.Use(_target);
+        hero.Attack.Use(_target, this);
         canAct --;
     }
 
     public void ActivePower(Square _target)
     {
-        hero.Active.Use(_target);
+        hero.Active.Use(_target, this);
         ui.ActiveUsed(true);
         canActive--;
     }
 
     public void PassivePower(Square _target)
     {
-        hero.Passive.Use(_target);
+        hero.Passive.Use(_target, this);
     }
 
 

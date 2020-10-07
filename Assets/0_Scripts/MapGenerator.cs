@@ -112,6 +112,6 @@ public class MapGenerator : MonoBehaviour
                 z++;
             }
 
-        GameplayManager.Instance.Board.Setup(board, mapSize);
+        GameplayManager.Instance.BoardManager.Setup(board, mapSize);
     }
 }

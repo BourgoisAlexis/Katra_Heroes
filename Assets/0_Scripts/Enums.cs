@@ -6,6 +6,19 @@
     Red
 }
 
+public enum e_step
+{
+    Default,
+
+    Draw,
+    Card,
+    UseCard,
+    Board,
+
+    Ennemy
+}
+
+
 public enum e_abilityType
 {
     Default,
@@ -14,17 +27,6 @@ public enum e_abilityType
     Position,
     Creation,
     Draw
-}
-
-public enum e_stats
-{
-    Default,
-
-    Health,
-    Movement,
-    Damage,
-    Range,
-    Critic
 }
 
 public enum e_rangeType
@@ -37,6 +39,27 @@ public enum e_rangeType
     Straight,
     EnnemyTeam,
     AllyTeam
+}
+
+public enum e_positionEffects
+{
+    Default,
+
+    Teleport,
+    Pull,
+    Push
+}
+
+
+public enum e_stats
+{
+    Default,
+
+    Health,
+    Movement,
+    Damage,
+    Range,
+    Critic
 }
 
 public enum e_unitType
@@ -60,6 +83,7 @@ public enum e_species
     Stalys,
     Middle
 }
+
 
 public enum e_squareType
 {

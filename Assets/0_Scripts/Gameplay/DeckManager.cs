@@ -1,35 +1,24 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using System.Collections;
 
 public class DeckManager : DragDrop
 {
     #region Variables
-    [SerializeField]
-    private GameObject cardPrefab;
-    [SerializeField]
-    private Transform cardParent;
-    [SerializeField]
-    private LayerMask zoneLayer;
+    [SerializeField] private GameObject cardPrefab;
+    [SerializeField] private Transform cardParent;
+    [SerializeField] private LayerMask zoneLayer;
 
     private GameplayManager gameplayManager;
     private BoardUtility utility;
     private CardPiece selectedCard;
-    private bool usingCard;
     private int currentIndex;
 
     private CardZone zone;
 
-    [SerializeField]
     private List<int> deck = new List<int>();
-    [SerializeField]
     private List<CardPiece> currentCards = new List<CardPiece>();
-    [SerializeField]
     private List<int> trash = new List<int>();
     private List<Square> activeList = new List<Square>();
-
-    //Accessors
-    public bool UsingCard => usingCard;
     #endregion
 
 
@@ -50,19 +39,7 @@ public class DeckManager : DragDrop
         foreach (string s in ui)
             deck.Add(int.Parse(s));
 
-        StartCoroutine(DebuteDraw());
-    }
-
-    private IEnumerator DebuteDraw()
-    {
-        int t = 5;
-        yield return new WaitForSeconds(1);
-
-        for (int i = 0; i < t; i++)
-        {
-            DrawCard();
-            yield return new WaitForSeconds(0.1f);
-        }
+        gameplayManager.DebuteDraw();
     }
 
 
@@ -71,7 +48,7 @@ public class DeckManager : DragDrop
         if (deck.Count > 0)
         {
             int drawAt = Random.Range(0, deck.Count);
-            Card drawn = GameplayManager.Instance.Data.Cards[deck[drawAt]];
+            Card drawn = gameplayManager.Data.Cards[deck[drawAt]];
             CardPiece card = Instantiate(cardPrefab, cardParent).GetComponent<CardPiece>();
 
             card.Setup(drawn, currentIndex);
@@ -98,7 +75,7 @@ public class DeckManager : DragDrop
 
     public void ClickOnCard(CardPiece _card)
     {
-        gameplayManager.Board.Unselection();
+        gameplayManager.BoardManager.Unselection();
 
         if (selectedCard != null)
             selectedCard.ReturnInHand();
@@ -109,16 +86,16 @@ public class DeckManager : DragDrop
     public void TargetBoard(Square _square)
     {
         if (activeList.Contains(_square))
-            selectedCard.Card.Ability.Use(_square);
+            selectedCard.Card.Ability.Use(_square, null);
 
         UsedCard();
     }
 
     public void TargetHero(HeroPiece _piece)
     {
-        Square square = gameplayManager.Board.Board[_piece.Position.x, _piece.Position.y];
+        Square square = gameplayManager.BoardManager.Board[_piece.Position.x, _piece.Position.y];
         if (activeList.Contains(square))
-            selectedCard.Card.Ability.Use(square);
+            selectedCard.Card.Ability.Use(square, null);
 
         UsedCard();
     }
@@ -152,15 +129,14 @@ public class DeckManager : DragDrop
     {
         base.DragEnd();
         Vector2 mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        Collider2D[] cols = Physics2D.OverlapCircleAll(mousePos, 0.2f);
+        Collider2D col = Physics2D.OverlapCircle(mousePos, 0.2f, zoneLayer);
 
-        if (cols.Length > 1)
-            foreach (Collider2D c in cols)
-                if (c.GetComponent<CardZone>())
-                {
-                    CardInDropZone();
-                    return;
-                }
+        if (col != null)
+            if (selectedCard.Card.Cost <= gameplayManager.Mana)
+            {
+                CardInDropZone();
+                return;
+            }
 
         Unselection();
     }
@@ -178,22 +154,25 @@ public class DeckManager : DragDrop
 
         if (ability.AbilityType != e_abilityType.Creation && ability.AbilityType != e_abilityType.Draw)
         {
-            activeList = utility.GetRangeSpe(activeList, ability);
+            activeList = utility.GetRange(activeList, ability);
 
             foreach (Square s in activeList)
                 s.HighLight(1);
 
-            usingCard = true;
+            gameplayManager.ChangeStep(3);
         }
         else
         {
-            ability.Use(null);
+            ability.Use(null, null);
             UsedCard();
         }
     }
 
     private void UsedCard()
     {
+        gameplayManager.ChangeStep(2);
+        gameplayManager.UpdateMana(-selectedCard.Card.Cost);
+
         currentCards.Remove(selectedCard);
         trash.Add(selectedCard.Card.Index);
         Destroy(selectedCard.gameObject);
@@ -215,7 +194,6 @@ public class DeckManager : DragDrop
             s.UnHighLight();
 
         activeList.Clear();
-        usingCard = false;
 
         toDrag = null;
 

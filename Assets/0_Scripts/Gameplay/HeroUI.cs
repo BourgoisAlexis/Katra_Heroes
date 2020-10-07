@@ -5,12 +5,9 @@ using TMPro;
 public class HeroUI : MonoBehaviour
 {
     #region Variables
-    [SerializeField]
-    private Image healthBar;
-    [SerializeField]
-    private TextMeshProUGUI healthBarText;
-    [SerializeField]
-    private ActiveButton active;
+    [SerializeField] private Image healthBar;
+    [SerializeField] private TextMeshProUGUI healthBarText;
+    [SerializeField] private ActiveButton active;
 
     private Transform _transform;
     private Camera mainCamera;
@@ -24,18 +21,15 @@ public class HeroUI : MonoBehaviour
         _transform = transform;
     }
 
-    public void Setup(HeroPiece _piece)
+    public void Setup(HeroPiece _piece, Color _color)
     {
         heroPiece = _piece;
         active.Setup(heroPiece);
-    }
 
-
-    public void ChangeColor(Color _color)
-    {
         healthBar.color = _color;
         healthBarText.color = _color;
     }
+
 
     public void UpdateVisual(Vector2 _position, int _health, int _maxHealth)
     {
@@ -43,6 +37,7 @@ public class HeroUI : MonoBehaviour
         healthBar.fillAmount = (float)_health / (float)_maxHealth;
         healthBarText.text = _health.ToString();
     }
+
 
     public void ActiveUsed(bool _used)
     {
