@@ -15,7 +15,7 @@ public class Hero : ScriptableObject
 
     [Header("Stats")]
     public int Health;
-    public int Movement;
+    public int Speed;
     public int Damage;
     public int Range;
     public int Critic;

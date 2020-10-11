@@ -9,16 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e160309ebc0aa0b46ba121bbb4889def, type: 3}
-  m_Name: Attack+
+  m_Script: {fileID: 11500000, guid: 042d6788819869b428bec0abde9d641f, type: 3}
+  m_Name: 0_BasicMove
   m_EditorClassIdentifier: 
   Graph: {fileID: 0}
-  RangeType: 6
+  targetting: 0
+  RangeType: 0
   Range: 3
-  Exceptions: 
+  Exceptions: 02000000
   GetOccupied: 1
-  EffectRangeType: 0
-  EffectRange: 0
-  Stat: 3
-  Value: 10
-  Duration: 3
+  Effect: 1
+  Distance: 0

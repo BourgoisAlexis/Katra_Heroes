@@ -17,7 +17,7 @@ MonoBehaviour:
   Name: AI2
   Graph: {fileID: 21300000, guid: d607c357362c8e24b81efe89318c2353, type: 3}
   Health: 100
-  Movement: 2
+  Speed: 2
   Damage: 15
   Range: 3
   Critic: 10

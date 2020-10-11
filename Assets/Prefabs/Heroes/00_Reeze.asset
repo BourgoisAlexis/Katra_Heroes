@@ -17,7 +17,7 @@ MonoBehaviour:
   Name: Reeze
   Graph: {fileID: 21300000, guid: b7e821b17440e114e86dbf33b88b840f, type: 3}
   Health: 80
-  Movement: 3
+  Speed: 3
   Damage: 30
   Range: 1
   Critic: 10
@@ -26,5 +26,5 @@ MonoBehaviour:
   UnitType: 3
   Move: {fileID: 11400000, guid: a444e91a40f3a24468987469334a94d2, type: 2}
   Attack: {fileID: 11400000, guid: b2645971357b8d24291293cea99dc083, type: 2}
-  Active: {fileID: 11400000, guid: b5e1973702f29684685fcd20bb73cdf3, type: 2}
+  Active: {fileID: 11400000, guid: 5eb52321003bb054591b9d4321f87aa0, type: 2}
   Passive: {fileID: 11400000, guid: dc4d22a8187c80c4e8ca073366c8fb52, type: 2}

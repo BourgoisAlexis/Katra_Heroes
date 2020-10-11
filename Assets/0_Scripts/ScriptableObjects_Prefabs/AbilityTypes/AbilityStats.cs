@@ -14,14 +14,12 @@ public class AbilityStats : Ability
     #endregion
 
 
-    public override void Set()
+    public override void Use(Square[] _targets, HeroPiece _user)
     {
-        abilityType = e_abilityType.Stats;
-    }
-
-    public override void Use(Square _target, HeroPiece _user)
-    {
-        if (_target.Piece != null)
-            _target.Piece.ModifyStat(Stat, Value, Duration);
+        foreach (Square s in _targets)
+        {
+            if (s.Piece != null)
+                s.Piece.ModifyStat(Stat, Value, Duration);
+        }
     }
 }

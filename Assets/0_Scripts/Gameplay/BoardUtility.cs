@@ -68,7 +68,7 @@ public class BoardUtility
                 toReturn = tempo;
                 break;
 
-            case e_rangeType.AllyTeam:
+            case e_rangeType.Allies:
                 tempo.Clear();
                 foreach (Square s in board)
                     if (s.Occupied && s.Piece.Team == GameplayManager.Instance.Team)
@@ -76,7 +76,7 @@ public class BoardUtility
                 toReturn = tempo;
                 break;
 
-            case e_rangeType.EnnemyTeam:
+            case e_rangeType.Ennemies:
                 tempo.Clear();
                 foreach (Square s in board)
                     if (s.Occupied && s.Piece.Team != GameplayManager.Instance.Team)

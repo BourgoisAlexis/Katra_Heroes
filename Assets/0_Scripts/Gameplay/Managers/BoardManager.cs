@@ -87,7 +87,9 @@ public class BoardManager : DragDrop
                 Square square = board[_piece.Position.x, _piece.Position.y];
                 if (activeList.Contains(square))
                 {
-                    selectedActive.Piece.ActivePower(square);
+                    Square[] targets = new Square[] { square };
+                    selectedActive.Piece.ActivePower(targets);
+
                     Unselection();
                 }
             }
@@ -105,7 +107,8 @@ public class BoardManager : DragDrop
                     if (selectedPiece.CanMove > 0)
                         selectedPiece.MovePiece(FindPath(square), true);
 
-                    selectedPiece.Attack(square);
+                    Square[] targets = new Square[] { square };
+                    selectedPiece.Attack(targets);
                 }
                 Unselection();
             }
@@ -118,7 +121,7 @@ public class BoardManager : DragDrop
                 toDrag = selectedPiece.transform;
                 selectedPiece.Hero.Attack.Value = - selectedPiece.Stats[e_stats.Damage].CurrentValue;
                 selectedPiece.Hero.Attack.Range = selectedPiece.Stats[e_stats.Range].CurrentValue;
-                selectedPiece.Hero.Move.Range = selectedPiece.Stats[e_stats.Movement].CurrentValue;
+                selectedPiece.Hero.Move.Range = selectedPiece.Stats[e_stats.Speed].CurrentValue;
                 SelectedPiece.Hero.Move.GetOccupied = selectedPiece.Hero.Fly;
                 canUnselect = false;
                 HighlightHeroRanges();
@@ -141,7 +144,9 @@ public class BoardManager : DragDrop
         {
             if (activeList.Contains(_square))
             {
-                selectedActive.Piece.ActivePower(_square);
+                Square[] targets = new Square[] { _square };
+                selectedActive.Piece.ActivePower(targets);
+
                 Unselection();
             }
         }
@@ -155,7 +160,7 @@ public class BoardManager : DragDrop
         HeroPiece piece = _active.Piece;
         Ability activeAbility = piece.Hero.Active;
 
-        if (activeAbility.AbilityType != e_abilityType.Creation && activeAbility.AbilityType != e_abilityType.Draw)
+        if (activeAbility.Targetting == e_targetting.Default)
         {
             activeList.Add(board[piece.Position.x, piece.Position.y]);
             activeList = utility.GetRange(activeList, piece.Hero.Active);
@@ -163,9 +168,18 @@ public class BoardManager : DragDrop
             foreach (Square s in activeList)
                 s.HighLight(1);
         }
+        else if (activeAbility.Targetting == e_targetting.AutomaticTarget)
+        {
+            activeList.Add(board[piece.Position.x, piece.Position.y]);
+            activeList = utility.GetRange(activeList, piece.Hero.Active);
+
+            piece.ActivePower(activeList.ToArray());
+            Unselection();
+        }
         else
         {
             piece.ActivePower(null);
+            Unselection();
         }
     }
 
@@ -267,15 +281,15 @@ public class BoardManager : DragDrop
             s.HighLight(3);
     }
 
-    private Square FindPath(Square _interact)
+    private Square FindPath(Square _target)
     {
         Square destination = null;
         int currentDist = 100;
 
         foreach (Square s in movementList)
         {
-            int xDiff = s.Position.x - _interact.Position.x;
-            int yDiff = s.Position.y - _interact.Position.y;
+            int xDiff = s.Position.x - _target.Position.x;
+            int yDiff = s.Position.y - _target.Position.y;
             int total = Mathf.Abs(xDiff) + Mathf.Abs(yDiff);
 
             if (total < currentDist)

@@ -19,26 +19,18 @@ public enum e_step
 }
 
 
-public enum e_abilityType
-{
-    Default,
-
-    Stats,
-    Position,
-    Creation,
-    Draw
-}
-
 public enum e_rangeType
 {
     Default,
 
-    Self,
     Full,
     Diagonal,
     Straight,
-    EnnemyTeam,
-    AllyTeam
+    Ennemies,
+    Allies,
+
+    //Automatic
+    Self,
 }
 
 public enum e_positionEffects
@@ -56,7 +48,7 @@ public enum e_stats
     Default,
 
     Health,
-    Movement,
+    Speed,
     Damage,
     Range,
     Critic
@@ -91,8 +83,13 @@ public enum e_squareType
 
     Ground,
     Obstacle,
-    //RandomGen
-    
-    //Custom
-    Stair
+}
+
+
+public enum e_targetting
+{
+    Default,
+
+    None,
+    AutomaticTarget
 }

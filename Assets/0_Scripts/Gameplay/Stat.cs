@@ -3,15 +3,16 @@
     #region Variables
     private bool canBeBuffed;
     private int baseValue;
-    private int buffDuration;
     private int currentValue;
+    private int buffDuration;
 
     //Accessors
     public bool CanBeBuffed => canBeBuffed;
     public int BaseValue => baseValue;
-    public int BuffDuration => buffDuration;
     public int CurrentValue => currentValue;
+    public int BuffDuration => buffDuration;
     #endregion
+
 
     public Stat(int _value, bool _buff)
     {

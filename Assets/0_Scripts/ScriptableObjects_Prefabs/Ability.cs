@@ -5,7 +5,7 @@ public class Ability : ScriptableObject
 {
     #region Variables
     public Sprite Graph;
-    protected e_abilityType abilityType;
+    [SerializeField] protected e_targetting targetting;
 
     [Header("Ranges")]
     public e_rangeType RangeType;
@@ -14,7 +14,7 @@ public class Ability : ScriptableObject
     public bool GetOccupied;
 
     //Accessors
-    public e_abilityType AbilityType => abilityType;
+    public e_targetting Targetting => targetting;
     #endregion
 
 
@@ -23,7 +23,7 @@ public class Ability : ScriptableObject
 
     }
 
-    public virtual void Use(Square _target, HeroPiece _user)
+    public virtual void Use(Square[] _targets, HeroPiece _user)
     {
         
     }

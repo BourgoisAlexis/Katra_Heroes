@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Draw
   m_EditorClassIdentifier: 
   Graph: {fileID: 0}
+  targetting: 1
   RangeType: 0
   Range: 0
   Exceptions: 

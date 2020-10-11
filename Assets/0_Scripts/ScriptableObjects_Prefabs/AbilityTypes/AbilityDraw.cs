@@ -11,10 +11,10 @@ public class AbilityDraw : Ability
 
     public override void Set()
     {
-        abilityType = e_abilityType.Draw;
+        targetting = e_targetting.None;
     }
 
-    public override void Use(Square _target, HeroPiece _user)
+    public override void Use(Square[] _targets, HeroPiece _user)
     {
         for (int i = 0; i < Value; i++)
             GameplayManager.Instance.DeckManager.DrawCard();

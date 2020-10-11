@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewAbility", menuName = "CUSTOM/Ability/Position")]
 public class AbilityPosition : Ability
@@ -16,14 +15,15 @@ public class AbilityPosition : Ability
 
     public override void Set()
     {
-        abilityType = e_abilityType.Position;
         board = GameplayManager.Instance.BoardManager.Board;
         utility = GameplayManager.Instance.BoardManager.Utility;
     }
 
-    public override void Use(Square _target, HeroPiece _user)
+    public override void Use(Square[] _targets, HeroPiece _user)
     {
-        Vector2Int direction = _target.Position - _user.Position;
+        Square target = _targets[0];
+
+        Vector2Int direction = target.Position - _user.Position;
         int x = direction.x != 0 ? (int)Mathf.Sign(direction.x) : 0;
         int y = direction.y != 0 ? (int)Mathf.Sign(direction.y) : 0;
         direction = new Vector2Int(x, y);
@@ -31,25 +31,25 @@ public class AbilityPosition : Ability
         switch (Effect)
         {
             case e_positionEffects.Teleport:
-                if (_target.Piece != null)
-                    _target.Piece.MovePiece(board[_user.Position.x, _user.Position.y], false);
+                if (target.Piece != null)
+                    target.Piece.MovePiece(board[_user.Position.x, _user.Position.y], false);
 
-                _user.MovePiece(_target, false);
+                _user.MovePiece(target, false);
                 break;
 
             case e_positionEffects.Pull:
-                if (_target.Piece != null)
+                if (target.Piece != null)
                 {
-                    Square square = utility.GetOneSquareInDirection(_target, direction, Distance);
-                    _target.Piece.MovePiece(square, false);
+                    Square square = utility.GetOneSquareInDirection(target, direction, Distance);
+                    target.Piece.MovePiece(square, false);
                 }
                 break;
 
             case e_positionEffects.Push:
-                if (_target.Piece != null)
+                if (target.Piece != null)
                 {
-                    Square square = utility.GetOneSquareInDirection(_target, direction, Distance);
-                    _target.Piece.MovePiece(square, false);
+                    Square square = utility.GetOneSquareInDirection(target, direction, Distance);
+                    target.Piece.MovePiece(square, false);
                 }
                 break;
         }

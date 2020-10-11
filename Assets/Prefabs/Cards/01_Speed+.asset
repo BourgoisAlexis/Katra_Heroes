@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0417df28f95954d45aa07324f92c7481, type: 3}
-  m_Name: 01_Attack+
+  m_Name: 01_Speed+
   m_EditorClassIdentifier: 
   Done: 1
   Index: 1
-  Name: Attack+
+  Name: Speed+
   Graph: {fileID: 21300000, guid: 2996148181360bb4fa1121096a3041d6, type: 3}
   Cost: 2
-  Ability: {fileID: 11400000, guid: 5eb52321003bb054591b9d4321f87aa0, type: 2}
+  Ability: {fileID: 11400000, guid: dc4d22a8187c80c4e8ca073366c8fb52, type: 2}

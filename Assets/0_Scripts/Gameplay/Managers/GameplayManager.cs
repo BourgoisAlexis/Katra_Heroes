@@ -13,11 +13,13 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private Data data;
     [SerializeField] private Camera mainCamera;
 
-    private e_teams team = e_teams.Blue;
     private DeckManager deckManager;
     private BoardManager boardManager;
     private UIManager uiManager;
 
+    [Header("Helpers")]
+    [SerializeField] 
+    private e_teams team;
     [SerializeField]
     private e_step step;
     [SerializeField]
@@ -45,6 +47,7 @@ public class GameplayManager : MonoBehaviour
         deckManager = GetComponent<DeckManager>();
         boardManager = GetComponent<BoardManager>();
         uiManager = GetComponent<UIManager>();
+        
         mainCamera = Camera.main;
     }
 
@@ -84,6 +87,7 @@ public class GameplayManager : MonoBehaviour
             _square = hit.transform.GetComponent<Square>();
         }
 
+        //Step
         if (step == e_step.Card)
         {
             if(_card != null)
@@ -91,7 +95,6 @@ public class GameplayManager : MonoBehaviour
                 deckManager.ClickDrag(_card.transform);
                 deckManager.ClickOnCard(_card);
             }
-
             else
                 UnselectAll();
         }
@@ -107,7 +110,9 @@ public class GameplayManager : MonoBehaviour
         else if (step == e_step.Board)
         {
             if (_active != null && _active.Piece.Team == team && _active.Piece.CanActive > 0)
+            {
                 boardManager.ClickOnActive(_active);
+            }
             else if (_piece != null)
             {
                 if (_piece.Team == team)
@@ -119,7 +124,6 @@ public class GameplayManager : MonoBehaviour
             {
                 boardManager.ClickOnBoard(_square);
             }
-
             else
                 UnselectAll();
         }
@@ -163,9 +167,9 @@ public class GameplayManager : MonoBehaviour
     }
 
 
-    public void ChangeStep(int _step)
+    public void ChangeStep(e_step _step)
     {
-        step = (e_step)_step;
+        step = _step;
     }
 
     public void UpdateMana(int _value)
@@ -186,7 +190,7 @@ public class GameplayManager : MonoBehaviour
 
     private IEnumerator DebuteDrawCorout()
     {
-        ChangeStep(1);
+        ChangeStep(e_step.Draw);
 
         int t = 5;
         yield return new WaitForSeconds(1);
@@ -209,7 +213,7 @@ public class GameplayManager : MonoBehaviour
         if (OnYourTurn != null)
             OnYourTurn();
 
-        ChangeStep(2);
+        ChangeStep(e_step.Card);
         //ChangeStep(4);
     }
 
@@ -218,11 +222,11 @@ public class GameplayManager : MonoBehaviour
         if (OnEnnemyTurn != null)
             OnEnnemyTurn();
 
-        ChangeStep(5);
+        ChangeStep(e_step.Ennemy);
     }
 
     public void BoardStepDebute()
     {
-        ChangeStep(4);
+        ChangeStep(e_step.Board);
     }
 }

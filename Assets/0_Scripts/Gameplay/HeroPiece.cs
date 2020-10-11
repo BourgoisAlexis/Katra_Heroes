@@ -44,7 +44,7 @@ public class HeroPiece : MonoBehaviour
         visual.sprite = hero.Graph;
 
         stats.Add(e_stats.Health, new Stat(hero.Health, false));
-        stats.Add(e_stats.Movement, new Stat(hero.Movement, true));
+        stats.Add(e_stats.Speed, new Stat(hero.Speed, true));
         stats.Add(e_stats.Damage, new Stat(hero.Damage, true));
         stats.Add(e_stats.Range, new Stat(hero.Range, true));
         stats.Add(e_stats.Critic, new Stat(hero.Critic, true));
@@ -71,22 +71,22 @@ public class HeroPiece : MonoBehaviour
     }
 
 
-    public void Attack(Square _target)
+    public void Attack(Square[] _targets)
     {
-        hero.Attack.Use(_target, this);
+        hero.Attack.Use(_targets, this);
         canAct --;
     }
 
-    public void ActivePower(Square _target)
+    public void ActivePower(Square[] _targets)
     {
-        hero.Active.Use(_target, this);
+        hero.Active.Use(_targets, this);
         ui.ActiveUsed(true);
         canActive--;
     }
 
-    public void PassivePower(Square _target)
+    public void PassivePower(Square[] _targets)
     {
-        hero.Passive.Use(_target, this);
+        hero.Passive.Use(_targets, this);
     }
 
 

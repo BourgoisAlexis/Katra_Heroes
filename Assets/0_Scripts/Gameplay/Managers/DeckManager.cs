@@ -86,7 +86,10 @@ public class DeckManager : DragDrop
     public void TargetBoard(Square _square)
     {
         if (activeList.Contains(_square))
-            selectedCard.Card.Ability.Use(_square, null);
+        {
+            Square[] targets = new Square[] { _square };
+            selectedCard.Card.Ability.Use(targets, null);
+        }
 
         UsedCard();
     }
@@ -95,7 +98,11 @@ public class DeckManager : DragDrop
     {
         Square square = gameplayManager.BoardManager.Board[_piece.Position.x, _piece.Position.y];
         if (activeList.Contains(square))
-            selectedCard.Card.Ability.Use(square, null);
+        {
+            Square[] targets = new Square[] { square };
+
+            selectedCard.Card.Ability.Use(targets, null);
+        }
 
         UsedCard();
     }
@@ -141,6 +148,7 @@ public class DeckManager : DragDrop
         Unselection();
     }
 
+
     private void CardInDropZone()
     {
         //Disparition de la carte
@@ -149,17 +157,23 @@ public class DeckManager : DragDrop
             zone.ShowZone(false);
         //A retaper
 
-
         Ability ability = selectedCard.Card.Ability;
 
-        if (ability.AbilityType != e_abilityType.Creation && ability.AbilityType != e_abilityType.Draw)
+        if (ability.Targetting == e_targetting.Default)
         {
             activeList = utility.GetRange(activeList, ability);
 
             foreach (Square s in activeList)
                 s.HighLight(1);
 
-            gameplayManager.ChangeStep(3);
+            gameplayManager.ChangeStep(e_step.UseCard);
+        }
+        else if (ability.Targetting == e_targetting.AutomaticTarget)
+        {
+            activeList = utility.GetRange(activeList, ability);
+            ability.Use(activeList.ToArray(), null);
+
+            UsedCard();
         }
         else
         {
@@ -170,7 +184,7 @@ public class DeckManager : DragDrop
 
     private void UsedCard()
     {
-        gameplayManager.ChangeStep(2);
+        gameplayManager.ChangeStep(e_step.Card);
         gameplayManager.UpdateMana(-selectedCard.Card.Cost);
 
         currentCards.Remove(selectedCard);
@@ -181,6 +195,7 @@ public class DeckManager : DragDrop
 
         CardsPosition();
     }
+
 
     public void Unselection()
     {

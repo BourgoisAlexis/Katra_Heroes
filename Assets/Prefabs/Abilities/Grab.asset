@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Grab
   m_EditorClassIdentifier: 
   Graph: {fileID: 0}
-  RangeType: 4
+  targetting: 0
+  RangeType: 3
   Range: 3
   Exceptions: 
   GetOccupied: 1
