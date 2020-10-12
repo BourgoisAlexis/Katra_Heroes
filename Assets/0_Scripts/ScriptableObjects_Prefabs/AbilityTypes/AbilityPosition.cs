@@ -16,7 +16,7 @@ public class AbilityPosition : Ability
     public override void Set()
     {
         board = GameplayManager.Instance.BoardManager.Board;
-        utility = GameplayManager.Instance.BoardManager.Utility;
+        utility = GameplayManager.Instance.Utility;
     }
 
     public override void Use(Square[] _targets, HeroPiece _user)

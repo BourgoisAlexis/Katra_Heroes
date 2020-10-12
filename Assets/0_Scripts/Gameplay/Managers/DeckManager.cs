@@ -38,8 +38,6 @@ public class DeckManager : DragDrop
         string[] ui = deckDoc.text.Split(':');
         foreach (string s in ui)
             deck.Add(int.Parse(s));
-
-        gameplayManager.DebuteDraw();
     }
 
 

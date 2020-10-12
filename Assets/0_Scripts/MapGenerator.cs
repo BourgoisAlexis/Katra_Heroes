@@ -90,17 +90,11 @@ public class MapGenerator : MonoBehaviour
 #endif
 
 
-    private void Start()
+    public void Setup()
     {
         if (map != null)
             GenerateMap();
 
-        Setup();
-    }
-
-    //Fill the board + Give it to Manager
-    private void Setup()
-    {
         board = new Square[mapSize.x, mapSize.y];
         int z = 0;
 
@@ -112,6 +106,6 @@ public class MapGenerator : MonoBehaviour
                 z++;
             }
 
-        GameplayManager.Instance.BoardManager.Setup(board, mapSize);
+        GameplayManager.Instance.Setup(board, mapSize);
     }
 }

@@ -28,7 +28,6 @@ public class BoardManager : DragDrop
     public HeroPiece SelectedPiece => selectedPiece;
     public bool CanUnselect => canUnselect;
     public ActiveButton SelectedActive => selectedActive;
-    public BoardUtility Utility => utility;
     #endregion
 
 
@@ -50,8 +49,7 @@ public class BoardManager : DragDrop
         board = _board;
         mapSize = _mapSize;
 
-        utility = new BoardUtility(board, mapSize);
-        gameplayManager.DeckManager.Setup(utility);
+        utility = gameplayManager.Utility;
     }
 
     private void CreateHeroPiece(int _heroIndex, e_teams _team, Vector2Int _position)

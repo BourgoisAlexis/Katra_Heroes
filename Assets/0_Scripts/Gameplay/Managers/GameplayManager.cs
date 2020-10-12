@@ -12,13 +12,15 @@ public class GameplayManager : MonoBehaviour
 
     [SerializeField] private Data data;
     [SerializeField] private Camera mainCamera;
+    [SerializeField] private MapGenerator map;
 
     private DeckManager deckManager;
     private BoardManager boardManager;
     private UIManager uiManager;
+    private BoardUtility utility;
 
     [Header("Helpers")]
-    [SerializeField] 
+    [SerializeField]
     private e_teams team;
     [SerializeField]
     private e_step step;
@@ -33,6 +35,7 @@ public class GameplayManager : MonoBehaviour
     public DeckManager DeckManager => deckManager;
     public BoardManager BoardManager => boardManager;
     public UIManager UIManager => uiManager;
+    public BoardUtility Utility => utility;
     public int Mana => mana;
     #endregion
 
@@ -47,8 +50,8 @@ public class GameplayManager : MonoBehaviour
         deckManager = GetComponent<DeckManager>();
         boardManager = GetComponent<BoardManager>();
         uiManager = GetComponent<UIManager>();
-        
-        mainCamera = Camera.main;
+
+        map.Setup();
     }
 
     private void Update()
@@ -61,6 +64,15 @@ public class GameplayManager : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
             Up();
+    }
+
+    public void Setup(Square[,] _board, Vector2Int _mapSize)
+    {
+        utility = new BoardUtility(_board, _mapSize);
+
+        boardManager.Setup(_board, _mapSize);
+        deckManager.Setup(utility);
+        DebuteDraw();
     }
 
 
@@ -182,7 +194,6 @@ public class GameplayManager : MonoBehaviour
     }
 
 
-    //Map(board datas) => Board(board utility) => Deck => DebuteDraw
     public void DebuteDraw()
     {
         StartCoroutine(DebuteDrawCorout());
@@ -208,13 +219,13 @@ public class GameplayManager : MonoBehaviour
 
     }
 
+
     public void YourTurn()
     {
         if (OnYourTurn != null)
             OnYourTurn();
 
         ChangeStep(e_step.Card);
-        //ChangeStep(4);
     }
 
     public void EnnemyTurn()
@@ -224,6 +235,7 @@ public class GameplayManager : MonoBehaviour
 
         ChangeStep(e_step.Ennemy);
     }
+
 
     public void BoardStepDebute()
     {
