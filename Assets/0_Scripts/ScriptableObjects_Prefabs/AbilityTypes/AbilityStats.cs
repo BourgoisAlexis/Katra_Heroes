@@ -19,7 +19,9 @@ public class AbilityStats : Ability
         foreach (Square s in _targets)
         {
             if (s.Piece != null)
+            {
                 s.Piece.ModifyStat(Stat, Value, Duration);
+            }
         }
     }
 }

@@ -12,8 +12,7 @@ public class BoardManager : DragDrop
     private Vector2Int mapSize;
     private Square[,] board;
 
-    private List<HeroPiece> blueTeam = new List<HeroPiece>();
-    private List<HeroPiece> redTeam = new List<HeroPiece>();
+    private List<HeroPiece> pieces = new List<HeroPiece>();
 
     private List<Square> movementList = new List<Square>();
     private List<Square> attackList = new List<Square>();
@@ -41,7 +40,8 @@ public class BoardManager : DragDrop
     private void Start()
     {
         CreateHeroPiece(0, e_teams.Blue, new Vector2Int(5, 4));
-        CreateHeroPiece(1, e_teams.Red, new Vector2Int(Random.Range(0, mapSize.x - 1), Random.Range(0, mapSize.y - 1)));
+        CreateHeroPiece(0, e_teams.Blue, new Vector2Int(4, 5));
+        CreateHeroPiece(1, e_teams.Red, new Vector2Int(5, 5));
     }
 
     public void Setup(Square[,] _board, Vector2Int _mapSize)
@@ -62,13 +62,11 @@ public class BoardManager : DragDrop
         piece.Setup(gameplayManager.Data.Heroes[_heroIndex], _team, _position, ui);
         start.ChangeOccupied(instance.GetComponent<HeroPiece>());
 
-        if (_team == e_teams.Blue)
-            blueTeam.Add(piece);
-        else if (_team == e_teams.Red)
-            redTeam.Add(piece);
-
         if (gameplayManager.Team == _team)
+        {
+            pieces.Add(piece);
             gameplayManager.OnYourTurn += piece.TurnDebute;
+        }
         else
             gameplayManager.OnEnnemyTurn += piece.TurnDebute;
     }
@@ -246,7 +244,6 @@ public class BoardManager : DragDrop
     }
 
 
-
     private void HighlightHeroRanges()
     {
         if (selectedPiece == null)
@@ -298,5 +295,17 @@ public class BoardManager : DragDrop
         }
 
         return destination;
+    }
+
+
+    public void CheckForNext()
+    {
+        foreach (HeroPiece p in pieces)
+        {
+            if (p.CanActive > 0 || p.CanMove > 0 || p.CanAct > 0)
+                return;
+        }
+
+        gameplayManager.NextStep();
     }
 }

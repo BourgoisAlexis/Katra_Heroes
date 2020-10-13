@@ -12,14 +12,13 @@ public class MapGenerator : MonoBehaviour
     [SerializeField]
     private Vector2Int mapSize;
     [SerializeField]
-    private Vector3 aspectRatio;
+    private float sideSpace;
     [SerializeField]
     private List<Square> squaresList;
 
     private Square[,] board;
     private Camera _mainCamera;
     private Vector2 startingPoint;
-    private Vector2 screenSize;
     #endregion
 
     public void  GenerateMap()
@@ -29,28 +28,16 @@ public class MapGenerator : MonoBehaviour
 
         squaresList.Clear();
 
-        float spriteSize = squarePrefab.GetComponentInChildren<SpriteRenderer>().sprite.bounds.size.x / 2;
-
         if (map != null)
             mapSize = map.MapSize;
         int current = 0;
 
-        float step = 0;
-        float margin = 0.5f;
+        float spriteSize = squarePrefab.GetComponentInChildren<SpriteRenderer>().sprite.bounds.size.x / 2;
 
-        screenSize = new Vector2(aspectRatio.z, aspectRatio.z * aspectRatio.x / aspectRatio.y);
-        screenSize = new Vector2(screenSize.x - margin - spriteSize, screenSize.y - margin - spriteSize);
+        Vector2 mapSpace = new Vector2(sideSpace - spriteSize, sideSpace - spriteSize);
 
-        if (screenSize.y <= screenSize.x)
-        {
-            step = screenSize.y * 2 / (mapSize.y - 1);
-            startingPoint = new Vector2(-screenSize.x + Mathf.Abs(screenSize.x - step / 2 * (mapSize.x - 1)), screenSize.y);
-        }
-        else
-        {
-            step = screenSize.x * 2 / (mapSize.x - 1);
-            startingPoint = new Vector2(-screenSize.x, screenSize.y - Mathf.Abs(screenSize.y - step / 2 * (mapSize.y - 1)));
-        }
+        float step = mapSpace.x * 2 / (mapSize.x - 1);
+        startingPoint = new Vector2(-mapSpace.x, step / 2 * (mapSize.y - 1));
 
         
         for (int i = 0; i < mapSize.x; i++)

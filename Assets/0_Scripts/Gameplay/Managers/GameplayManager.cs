@@ -13,10 +13,12 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private Data data;
     [SerializeField] private Camera mainCamera;
     [SerializeField] private MapGenerator map;
+    [SerializeField] private AnimationClip transiAnim;
 
     private DeckManager deckManager;
     private BoardManager boardManager;
     private UIManager uiManager;
+    private PoolManager poolManager;
     private BoardUtility utility;
 
     [Header("Helpers")]
@@ -35,6 +37,7 @@ public class GameplayManager : MonoBehaviour
     public DeckManager DeckManager => deckManager;
     public BoardManager BoardManager => boardManager;
     public UIManager UIManager => uiManager;
+    public PoolManager PoolManager => poolManager;
     public BoardUtility Utility => utility;
     public int Mana => mana;
     #endregion
@@ -50,6 +53,7 @@ public class GameplayManager : MonoBehaviour
         deckManager = GetComponent<DeckManager>();
         boardManager = GetComponent<BoardManager>();
         uiManager = GetComponent<UIManager>();
+        poolManager = GetComponent<PoolManager>();
 
         map.Setup();
     }
@@ -190,7 +194,7 @@ public class GameplayManager : MonoBehaviour
         uiManager.UpdateMana();
 
         if (mana <= 0)
-            BoardStepDebute();
+            NextStep();
     }
 
 
@@ -204,7 +208,7 @@ public class GameplayManager : MonoBehaviour
         ChangeStep(e_step.Draw);
 
         int t = 5;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
 
         for (int i = 0; i < t; i++)
         {
@@ -225,7 +229,9 @@ public class GameplayManager : MonoBehaviour
         if (OnYourTurn != null)
             OnYourTurn();
 
-        ChangeStep(e_step.Card);
+        ChangeStep(e_step.Draw);
+        deckManager.DrawCard();
+        NextStep();
     }
 
     public void EnnemyTurn()
@@ -233,12 +239,39 @@ public class GameplayManager : MonoBehaviour
         if (OnEnnemyTurn != null)
             OnEnnemyTurn();
 
-        ChangeStep(e_step.Ennemy);
+        StartCoroutine(StepTansition(e_step.Ennemy));
     }
 
 
-    public void BoardStepDebute()
+    public void NextStep()
     {
-        ChangeStep(e_step.Board);
+        switch (step)
+        {
+            case e_step.Draw:
+                StartCoroutine(StepTansition(e_step.Card));
+                break;
+
+            case e_step.Card:
+                StartCoroutine(StepTansition(e_step.Board));
+                break;
+
+            case e_step.Board:
+                EnnemyTurn();
+                break;
+
+            case e_step.Ennemy:
+                YourTurn();
+                break;
+        }
+    }
+
+    public IEnumerator StepTansition(e_step _final)
+    {
+        step = e_step.Default;
+        UIManager.Transition(_final);
+
+        yield return new WaitForSeconds(transiAnim.length);
+
+        step = _final;
     }
 }

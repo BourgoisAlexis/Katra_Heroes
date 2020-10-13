@@ -68,6 +68,8 @@ public class HeroPiece : MonoBehaviour
             canMove --;
 
         UpdateUI();
+
+        GameplayManager.Instance.BoardManager.CheckForNext();
     }
 
 
@@ -75,6 +77,8 @@ public class HeroPiece : MonoBehaviour
     {
         hero.Attack.Use(_targets, this);
         canAct --;
+
+        GameplayManager.Instance.BoardManager.CheckForNext();
     }
 
     public void ActivePower(Square[] _targets)
@@ -82,6 +86,8 @@ public class HeroPiece : MonoBehaviour
         hero.Active.Use(_targets, this);
         ui.ActiveUsed(true);
         canActive--;
+
+        GameplayManager.Instance.BoardManager.CheckForNext();
     }
 
     public void PassivePower(Square[] _targets)
@@ -101,6 +107,11 @@ public class HeroPiece : MonoBehaviour
             else
                 stats[_key].UpdateValue(_value);
         }
+        if (_key == e_stats.Health)
+            GameplayManager.Instance.PoolManager.Instantiate("BaseSlash", transform.position, Vector3.zero, null);
+        else
+            GameplayManager.Instance.PoolManager.Instantiate("BaseParticle", transform.position, Vector3.zero, null);
+
 
         UpdateUI();
     }

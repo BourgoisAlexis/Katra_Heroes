@@ -4,8 +4,7 @@ using UnityEngine;
 public class PoolManager : MonoBehaviour
 {
 	#region Variables
-	[Header("FX Prefabs")]
-	[SerializeField] private GameObject FXfire;
+	[SerializeField] private List<GameObject> prefabs;
 
 	private Transform poolParent;
 	private Dictionary<string, Queue<GameObject>> poolDictionary = new Dictionary<string, Queue<GameObject>>();
@@ -19,15 +18,17 @@ public class PoolManager : MonoBehaviour
 		Setup();
 	}
 
+
 	private void Setup()
 	{
-		AddTier(FXfire, 10, "FXfire");
+		foreach (GameObject g in prefabs)
+			AddTier(g, 10);
 	}
 
 
-	public void AddTier(GameObject _prefab, int _size, string _name)
+	public void AddTier(GameObject _prefab, int _size)
 	{
-		if (poolDictionary.ContainsKey(_name))
+		if (poolDictionary.ContainsKey(_prefab.name))
 			return;
 
 		Queue<GameObject> queue = new Queue<GameObject>();
@@ -41,10 +42,10 @@ public class PoolManager : MonoBehaviour
 			queue.Enqueue(newObject);
 		}
 
-		poolDictionary.Add(_name, queue);
+		poolDictionary.Add(_prefab.name, queue);
 	}
 
-	public GameObject Instantiate(string _name, Vector3 _position, Quaternion _rotation, Transform _parent)
+	public GameObject Instantiate(string _name, Vector3 _position, Vector3 _eulerAngle, Transform _parent)
 	{
 		if (!poolDictionary.ContainsKey(_name))
 		{
@@ -54,9 +55,10 @@ public class PoolManager : MonoBehaviour
 
 		GameObject instance = poolDictionary[_name].Dequeue();
 		poolDictionary[_name].Enqueue(instance);
+		instance.SetActive(false);
 		instance.SetActive(true);
 		instance.transform.position = _position;
-		instance.transform.rotation = _rotation;
+		instance.transform.eulerAngles = _eulerAngle;
 		
 		if (_parent != null)
 			instance.transform.SetParent(_parent);

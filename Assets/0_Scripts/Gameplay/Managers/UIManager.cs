@@ -4,11 +4,15 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     #region Variables
+    [SerializeField] private UIClickManager uiClickManager;
     [SerializeField] private GameObject heroeUIPrefab;
-    [SerializeField] private Transform uiParent;
+    [SerializeField] private Transform heroUIParent;
     [SerializeField] private TextMeshProUGUI mana;
 
-    private UIClickManager uiClickManager;
+    [Header("Transition")]
+    [SerializeField] private Animator animator;
+    [SerializeField] private TextMeshProUGUI transitionText;
+
     private GameplayManager gameplayManager;
 
     //Accessors
@@ -18,7 +22,6 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        uiClickManager = uiParent.GetComponent<UIClickManager>();
         gameplayManager = GetComponent<GameplayManager>();
 
         UpdateMana();
@@ -26,12 +29,18 @@ public class UIManager : MonoBehaviour
 
     public HeroUI CreateHeroUI()
     {
-        HeroUI ui = Instantiate(heroeUIPrefab, uiParent).GetComponent<HeroUI>();
+        HeroUI ui = Instantiate(heroeUIPrefab, heroUIParent).GetComponent<HeroUI>();
         return ui;
     }
 
     public void UpdateMana()
     {
         mana.text = gameplayManager.Mana.ToString();
+    }
+
+    public void Transition(e_step _step)
+    {
+        transitionText.text = _step.ToString();
+        animator.SetTrigger("anim");
     }
 }
