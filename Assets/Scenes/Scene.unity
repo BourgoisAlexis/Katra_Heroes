@@ -10588,7 +10588,7 @@ MonoBehaviour:
   transiAnim: {fileID: 7400000, guid: 3f5462ed0fc2c814389ede10f7780c18, type: 2}
   team: 1
   step: 0
-  mana: 3
+  maxMana: 3
   turn: 1
 --- !u!114 &1725199778
 MonoBehaviour:

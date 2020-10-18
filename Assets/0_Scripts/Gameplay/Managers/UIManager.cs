@@ -23,9 +23,8 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         gameplayManager = GetComponent<GameplayManager>();
-
-        UpdateMana();
     }
+
 
     public HeroUI CreateHeroUI()
     {

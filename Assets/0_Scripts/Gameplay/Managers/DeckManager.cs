@@ -11,13 +11,13 @@ public class DeckManager : DragDrop
     private GameplayManager gameplayManager;
     private BoardUtility utility;
     private CardPiece selectedCard;
-    private int currentIndex;
 
     private CardZone zone;
 
     private List<int> deck = new List<int>();
     private List<CardPiece> currentCards = new List<CardPiece>();
     private List<int> trash = new List<int>();
+
     private List<Square> activeList = new List<Square>();
     #endregion
 
@@ -32,7 +32,6 @@ public class DeckManager : DragDrop
     public void Setup(BoardUtility _utility)
     {
         utility = _utility;
-        currentIndex = 0;
         TextAsset deckDoc = Resources.Load<TextAsset>("Decks/Deck_01");
 
         string[] ui = deckDoc.text.Split(':');
@@ -49,13 +48,14 @@ public class DeckManager : DragDrop
             Card drawn = gameplayManager.Data.Cards[deck[drawAt]];
             CardPiece card = Instantiate(cardPrefab, cardParent).GetComponent<CardPiece>();
 
-            card.Setup(drawn, currentIndex);
+            card.transform.localPosition = new Vector3(750, -350);
+
+            card.Setup(drawn);
             currentCards.Add(card);
 
             CardsPosition();
 
             deck.RemoveAt(drawAt);
-            currentIndex++;
         }
     }
 
@@ -76,7 +76,7 @@ public class DeckManager : DragDrop
         gameplayManager.BoardManager.Unselection();
 
         if (selectedCard != null)
-            selectedCard.ReturnInHand();
+            selectedCard.ReturnInHand(0.1f);
 
         selectedCard = _card;
     }
@@ -183,7 +183,7 @@ public class DeckManager : DragDrop
     private void UsedCard()
     {
         gameplayManager.ChangeStep(e_step.Card);
-        gameplayManager.UpdateMana(-selectedCard.Card.Cost);
+        gameplayManager.ModifyMana(-selectedCard.Card.Cost);
 
         currentCards.Remove(selectedCard);
         trash.Add(selectedCard.Card.Index);
@@ -199,7 +199,7 @@ public class DeckManager : DragDrop
     {
         if (selectedCard)
         {
-            selectedCard.ReturnInHand();
+            selectedCard.ReturnInHand(0.1f);
             selectedCard = null;
         }
 

@@ -27,6 +27,7 @@ public class GameplayManager : MonoBehaviour
     [SerializeField]
     private e_step step;
     [SerializeField]
+    private int maxMana;
     private int mana;
     [SerializeField]
     private bool turn;
@@ -188,7 +189,7 @@ public class GameplayManager : MonoBehaviour
         step = _step;
     }
 
-    public void UpdateMana(int _value)
+    public void ModifyMana(int _value)
     {
         mana += _value;
         uiManager.UpdateMana();
@@ -231,6 +232,8 @@ public class GameplayManager : MonoBehaviour
 
         ChangeStep(e_step.Draw);
         deckManager.DrawCard();
+        mana = maxMana;
+        UIManager.UpdateMana();
         NextStep();
     }
 

@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +16,6 @@ public class CardPiece : MonoBehaviour
 
     //Accessors
     public Card Card => card;
-    public int Index => index;
     #endregion
 
 
@@ -24,10 +24,9 @@ public class CardPiece : MonoBehaviour
         _transform = transform;
     }
 
-    public void Setup(Card _card, int _index)
+    public void Setup(Card _card)
     {
         card = _card;
-        index = _index;
         card.Ability.Set();
 
         text.text = card.Cost.ToString();
@@ -38,11 +37,11 @@ public class CardPiece : MonoBehaviour
     public void ChangePosition(Vector2 _pos)
     {
         handPosition = _pos;
-        ReturnInHand();
+        ReturnInHand(0.3f);
     }
 
-    public void ReturnInHand()
+    public void ReturnInHand(float _speed)
     {
-        _transform.localPosition = handPosition;
+        _transform.DOLocalMove(handPosition, _speed);
     }
 }
