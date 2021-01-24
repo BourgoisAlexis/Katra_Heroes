@@ -49,7 +49,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: f383fad76d1d0a642ae6592a348cc7a2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -70,7 +70,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 9d01126e38a093a428b82fd0d63a14de, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d607c357362c8e24b81efe89318c2353, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 3912273715354447468}
   - component: {fileID: 8672306271000225179}
   - component: {fileID: 3912273715354447469}
+  - component: {fileID: 531935458195405955}
   m_Layer: 0
   m_Name: HeroPiece
   m_TagString: Untagged
@@ -153,3 +154,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visual: {fileID: 3912273714276521095}
+--- !u!114 &531935458195405955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3912273715354447378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 741a1b8296ec87e4aaf724d60d5e6020, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

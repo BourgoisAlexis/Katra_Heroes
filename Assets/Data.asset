@@ -14,14 +14,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Colors:
   - {r: 1, g: 1, b: 1, a: 0.39215687}
-  - {r: 1, g: 0.74686915, b: 0, a: 0.78431374}
-  - {r: 1, g: 0, b: 0.20994282, a: 0.78431374}
-  - {r: 0, g: 0.41432905, b: 1, a: 0.78431374}
-  - {r: 0, g: 0.6653924, b: 1, a: 1}
-  - {r: 1, g: 0, b: 0.34520102, a: 1}
+  - {r: 1, g: 0.7490196, b: 0.3803922, a: 1}
+  - {r: 0.2745098, g: 0.689019, b: 1, a: 1}
+  - {r: 1, g: 0.27450982, b: 0.33333334, a: 1}
+  - {r: 0.171484, g: 1, b: 0, a: 1}
+  StatColors:
+  - Stat: 1
+    Color: {r: 1, g: 0.27450982, b: 0.33333334, a: 1}
+  - Stat: 2
+    Color: {r: 1, g: 0.8938684, b: 0.2745098, a: 1}
+  - Stat: 3
+    Color: {r: 1, g: 0.5519131, b: 0.2745098, a: 1}
+  - Stat: 4
+    Color: {r: 0.6937519, g: 0.2745098, b: 1, a: 1}
+  - Stat: 5
+    Color: {r: 0.2745098, g: 0.74585366, b: 1, a: 1}
   Heroes:
-  - {fileID: 11400000, guid: ea454e0f419f9944ea2ec95ac4512bb5, type: 2}
+  - {fileID: 11400000, guid: 8ee96de322968e74380fdddf27608798, type: 2}
+  - {fileID: 11400000, guid: 643ce53c36150994693d9b11cd72d8d9, type: 2}
+  - {fileID: 11400000, guid: f17f0323bec75d746b1f5c109c2027ab, type: 2}
   - {fileID: 11400000, guid: e07fb2934ec963a42a8eb9ac32f7ea21, type: 2}
+  - {fileID: 11400000, guid: ea454e0f419f9944ea2ec95ac4512bb5, type: 2}
+  - {fileID: 11400000, guid: 8e2061264b0411847856ca11b975e278, type: 2}
   Cards:
-  - {fileID: 11400000, guid: ac235fb524994b144acc3591b84c7338, type: 2}
-  - {fileID: 11400000, guid: 47e3ccd510cba9d4ba9521d906e89f65, type: 2}
+  - {fileID: 11400000, guid: 5c96f90ce280f834ca72dfe76cdc7123, type: 2}
+  - {fileID: 11400000, guid: 2e752393bd9eeee4badc6700fd20209d, type: 2}
+  - {fileID: 11400000, guid: 7b87b90c7678fc94e986ee39a35de8d6, type: 2}
+  - {fileID: 11400000, guid: 9e5c7af3bf1a3c749825d48e8a75859c, type: 2}

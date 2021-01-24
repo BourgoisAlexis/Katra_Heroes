@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06ad6d82a745db247bd6b2b5862aef44, type: 3}
+  m_Name: 05_Tarah
+  m_EditorClassIdentifier: 
+  Index: 5
+  Name: Tarah
+  Graph: {fileID: 21300000, guid: 3c472804925e27d4498d8e01bb4df783, type: 3}
+  Health: 70
+  Speed: 4
+  Damage: 20
+  Range: 1
+  Critic: 25
+  Fly: 1
+  Species: 6
+  UnitType: 3
+  Move: {fileID: 11400000, guid: 14666b6c4923ab540a284dbb79ff8bf6, type: 2}
+  Attack: {fileID: 11400000, guid: 55b7b1409a2f18a49a709c59cab965df, type: 2}
+  Active: {fileID: 11400000, guid: f003581eb6e579743a78f462daac761e, type: 2}
+  Passive: {fileID: 11400000, guid: 55b7b1409a2f18a49a709c59cab965df, type: 2}

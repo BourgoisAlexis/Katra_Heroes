@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06ad6d82a745db247bd6b2b5862aef44, type: 3}
+  m_Name: 02_Wackles
+  m_EditorClassIdentifier: 
+  Index: 2
+  Name: Wackles
+  Graph: {fileID: 21300000, guid: b370804e3c0e24448a3beb5301f6517f, type: 3}
+  Health: 70
+  Speed: 3
+  Damage: 15
+  Range: 2
+  Critic: 15
+  Fly: 0
+  Species: 2
+  UnitType: 3
+  Move: {fileID: 11400000, guid: 14666b6c4923ab540a284dbb79ff8bf6, type: 2}
+  Attack: {fileID: 11400000, guid: 55b7b1409a2f18a49a709c59cab965df, type: 2}
+  Active: {fileID: 11400000, guid: ca846078fcc8cdd43862548cbc74efbb, type: 2}
+  Passive: {fileID: 11400000, guid: 55b7b1409a2f18a49a709c59cab965df, type: 2}
