@@ -318,7 +318,9 @@ public class BoardManager : DragDrop
                 ClickOnBoard(_square);
         }
         else
+        {
             Unselection();
+        }
     }
 
 
@@ -327,7 +329,11 @@ public class BoardManager : DragDrop
         if (selectedPiece != null)
         {
             Square square = board[selectedPiece.Position.x, selectedPiece.Position.y];
-            selectedPiece.NotifyMovement(square, false);
+            if (step != e_step.Placement)
+                selectedPiece.NotifyMovement(square, false);
+            else
+                MoveHeroPiece(selectedPiece.Index, square.Position, false);
+
             selectedPiece.HighLight(false);
         }
 

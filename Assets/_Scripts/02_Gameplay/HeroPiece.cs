@@ -63,9 +63,6 @@ public class HeroPiece : MonoBehaviour
 
     public void MovePiece(Square _square, bool _useMove)
     {
-        if (_square.Position == position)
-            return;
-
         GameplayManager.Instance.Utility.Board[position.x, position.y].ChangeOccupied(null);
         StartCoroutine(Move (new Vector3 (_square.transform.position.x, _square.transform.position.y, -1)));
         position = _square.Position;

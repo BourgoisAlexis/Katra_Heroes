@@ -134,7 +134,7 @@ public class GameplayInputs : InputManager
     {
         if (deckManager.ToDrag != null)
             deckManager.Drag();
-        else if (boardManager.ToDrag != null)
+        if (boardManager.ToDrag != null)
             boardManager.Drag();
     }
 
